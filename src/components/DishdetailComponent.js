@@ -14,7 +14,7 @@ class DishDetail extends Component{
     renderDish(dish) {
         if(dish != null) {
             return (
-                
+
                 <div className='col-12 col-md-5 m-1'>
                     <Card>
                    < CardImg width="100%" src={dish.image} alt={dish.name}/>
@@ -24,7 +24,6 @@ class DishDetail extends Component{
                                </CardBody>
                     </Card>
                 </div>
-                
             )
         }
         else{
@@ -43,7 +42,7 @@ class DishDetail extends Component{
                         <ul key = {comment.id} className='list-unstyled'>
                             <li>
                                 <div>{comment.comment}</div>
-                    <div>{`--- ${comment.author} , ${comment.date}`}</div>
+                    <div>--- {comment.author} ,{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</div>
                             </li>
                         </ul>
                     )
@@ -59,7 +58,7 @@ class DishDetail extends Component{
     }
     
     render(){
-        const dish= this.props.selectedDish
+        const dish= this.props.dish
         if(dish==null){
             return(
                 <div>
@@ -68,7 +67,7 @@ class DishDetail extends Component{
         }
         else{
             return (
-                <div>
+                <div className="container">
                     <div className="row">
                         {this.renderDish(dish)}
                         <div className='col-12 col-md-5 m-1'>
