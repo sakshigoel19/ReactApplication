@@ -26,7 +26,7 @@ class CommentForm extends Component {
 
     handleSubmit(values) {
         this.toggleModal();
-        alert("current state"+ JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
     render(){
         return(
@@ -67,8 +67,8 @@ class CommentForm extends Component {
                                     />
             </Row>
             <Row className="form-group m-1">
-                <Label htmlFor="feedback">Comment</Label>
-                <Control.textarea model=".feedback" id="feedback" name="feedback" rows="6" className="form-control"/>
+                <Label htmlFor="comment">Comment</Label>
+                <Control.textarea model=".comment" id="comment" name="comment" rows="6" className="form-control"/>
             </Row>
             <Button type="submit" value="submit" color="primary">Submit</Button>
             </LocalForm>
@@ -104,26 +104,27 @@ class CommentForm extends Component {
         }
     }
 
-   function  RenderComments({comments}) {
+   function  RenderComments({comments, addComment, dishId}) {
         if(comments!=null) {
             return(
-               
+                <div className='col-12 col-md-5 m-1'>
+                <h4>Comments</h4>
+                <ul className='list-unstyled'>{
                 comments.map((comment)=>{
                     return(
-                        <ul key = {comment.id} className='list-unstyled'>
+                        
                             <li>
-                                <div>{comment.comment}</div>
-                    <div>--- {comment.author} ,{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</div>
+                                <p>{comment.comment}</p>
+                    <p>--- {comment.author} ,{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
                             </li>
                             
-                        </ul>
-                     
                     )
-                    })
-                
+                    })}
+                 </ul>
+                 <CommentForm dishId={dishId} addComment={addComment}/>
+                </div>
 
-
-            )
+            );
         }
         else{
             return(
@@ -157,13 +158,13 @@ class CommentForm extends Component {
                 </div>
                     <div className="row">
                         <RenderDish dish={props.dish}/>
-                        <div className='col-12 col-md-5 m-1'>
-                        <h4>Comments</h4>
-                            <RenderComments comments = {props.comments}/>
-                            <CommentForm/>
+                        
+                            <RenderComments comments = {props.comments} addComment={props.addComment}
+        dishId={props.dish.id}/>
+                           
                        </div>
                     </div>
-                </div>
+                
             )
         }
     }
