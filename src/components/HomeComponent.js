@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card,CardImg,CardText,CardTitle,CardBody,CardSubtitle} from 'reactstrap';
+import {Card,CardImg,CardText,CardTitle,CardBody} from 'reactstrap';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
@@ -15,7 +15,7 @@ function RenderCard({item, isLoading, errMess}){
                 <h4>{errMess}</h4>
         );
     }
-    else{
+    else
         return(
             <Card>
                 <CardImg src={baseUrl + item.image} alt={item.name} />
@@ -26,7 +26,7 @@ function RenderCard({item, isLoading, errMess}){
                 </CardBody>
             </Card>
         );
-    }
+    
     
 }
 function Home(props){
